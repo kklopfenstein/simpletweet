@@ -1,0 +1,14 @@
+{
+    "twit_data": {
+        "consumer_key": "1b41lmWY8JOTxTVMBIeVi4ei",
+        "consumer_secret": "F3y8kPj8sPeI0EbwBZnOy0vbLsukKRbmxB4X6ODc6Jib9Nc06z",
+        "access_token": "GmnWSHet5XZMGKBGsL64g4Qh03vHFvqlPfNQCzfb9bpvpwJ4y4",
+        "access_token_secret": "JkipuAUQctAK9Nsj1Br0f7RHSYVxfhZX5titQOxFesHsuMu8m1"
+    },
+    "phrases": [
+        "phrase1",
+        "phrase2",
+        "phrase3"
+    ],
+    "search_phrase": "keyword"
+}
