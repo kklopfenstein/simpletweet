@@ -181,7 +181,7 @@ function processTweet() {
 
         selectTweet(tweet_id, screen_name, tweet_text, function(rows) { 
           insertTweet(tweet_id, screen_name, tweet_text, function() {
-            tarnation(tweet_id, screen_name);
+            tweetReply(tweet_id, screen_name);
           });
         });
       
@@ -240,7 +240,7 @@ setInterval(function() {
   }
 },1000*60*60*1); // every hour
 
-// tweet @ random public tweet containing the word 'tarnation'
+// tweet @ random public tweet containing the keyword
 setInterval(function() {
   try {
     processTweet();
