@@ -24,7 +24,11 @@ function initTwitter() {
 
 var file = __dirname + '/twit_config.json';
 
+// twiter api configuration
 var twit_data;
+
+// random phrases the bot will tweet
+var phrases;
 
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) {
@@ -32,30 +36,14 @@ fs.readFile(file, 'utf8', function (err, data) {
     return;
   }
  
-  twit_data = JSON.parse(data);
+  var file_data = JSON.parse(data);
+  twit_data = file_data.twit_data;
+  phrases = file_data.phrases;
  
   console.log(logdt() + " loading data ")
 
   initTwitter();
 });
-
-// load phrases configuration file
-
-var phrases_file = __dirname + '/phrases.json';
-
-var phrases;
-
-fs.readFile(phrases_file, 'utf8', function (err, data) {
-  if (err) {
-    console.log(logdt() + 'Error: ' + err);
-    return;
-  }
- 
-  phrases = JSON.parse(data);
- 
-  console.log(logdt() + " loading phrases data ")
-
-})
 
 // db code
 
@@ -91,7 +79,7 @@ function logdt() {
   return "[" + dt + "]";
 }
 
-function tarnation (id, screen_name) {
+function tweetReply (id, screen_name) {
   statement = "@"+screen_name+" " + randomPhrase();
   var moment_date = moment();
   if(!test_mode) {
