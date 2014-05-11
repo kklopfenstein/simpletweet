@@ -1,6 +1,5 @@
 var restclient = require('node-restclient');
 var Twit = require('twit');
-var app = require('express').createServer();
 var date = require('datejs');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('users.db');
