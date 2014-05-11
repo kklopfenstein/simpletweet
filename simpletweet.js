@@ -21,7 +21,15 @@ function initTwitter() {
 
 // load twitter configuration file
 
-var file = __dirname + '/twit_config.json';
+var file = __dirname + "/";
+
+if(process.argv[2]) {
+  file += process.argv[2];
+} else {
+  file += "twit_config.json";
+}
+
+console.log(logdt() + " loading configuration from " + file);
 
 // twiter api configuration
 var twit_data;
@@ -35,22 +43,78 @@ var bot_screen_name;
 // Test mode - if true does not tweet
 var test_mode;
 
+// timeouts
+var random_tweet_timeout = 99999;
+var favorite_timeout     = 99999;
+var reply_tweet_timeout  = 99999;
+
 fs.readFile(file, 'utf8', function (err, data) {
+
+  console.log(logdt() + " initializing configuration");
+
   if (err) {
     console.log(logdt() + 'Error: ' + err);
+    process.exit();
     return;
   }
  
-  var file_data = JSON.parse(data);
-  twit_data = file_data.twit_data;
-  phrases = file_data.phrases;
-  search_phrase = file_data.search_phrase;
-  bot_screen_name = file_data.bot_screen_name;
-  test_mode = file_data.test_mode;
+  var file_data        = JSON.parse(data);
+  twit_data            = file_data.twit_data;
+
+  if(!twit_data) {
+    console.log(logdt() + " [ERROR] could not load twitter configuration!");
+    process.exit();
+  }
+
+  phrases              = file_data.phrases;
+
+  if(!phrases) {
+    console.log(logdt() + " [ERROR] could not load phrases");
+    process.exit();
+  }
+
+  search_phrase        = file_data.search_phrase;
+
+  if(!search_phrase) {
+    console.log(logdt() + " [ERROR] could not load search phrase");
+    process.exit();
+  }
+
+  bot_screen_name      = file_data.bot_screen_name;
+
+  if(!bot_screen_name) {
+    console.log(logdt() + " [ERROR] could not load bot screen name");
+    process.exit();
+  }
+
+  test_mode            = file_data.test_mode;
+
+  random_tweet_timeout = file_data.random_tweet_timeout;
+
+  if(!random_tweet_timeout) {
+    console.log(logdt() + " [ERROR] could not load random tweet");
+    process.exit();
+  }
+
+  favorite_timeout     = file_data.favorite_timeout;
+
+  if(!favorite_timeout) {
+    console.log(logdt() + " [ERROR] could not load favorite_timeout");
+    process.exit();
+  }
+
+  reply_tweet_timeout  = file_data.reply_tweet_timeout;
+
+  if(!reply_tweet_timeout) {
+    console.log(logdt() + " [ERROR] could not load reply tweet timeout");
+    process.exit();
+  }
  
-  console.log(logdt() + " loading data ")
+  console.log(logdt() + " configuration loaded");
 
   initTwitter();
+
+  initEvents();
 });
 
 // db code
@@ -82,7 +146,7 @@ function tweetReply (id, screen_name) {
       // do nothing
     })
   } else {
-    console.log(logdt() + "DEBUGMODE: " + statement);
+    console.log(logdt() + " [TEST] " + statement);
   }
 }
 
@@ -93,7 +157,7 @@ function postRandomTweet() {
     T.post('statuses/update', { status: statement }, function(err, data, response) {
     });
   } else {
-    console.log(logdt() + "DEBUGMODE: " + statement);
+    console.log(logdt() + " [TEST] " + statement);
   }
 }
 
@@ -106,7 +170,7 @@ function favRTs () {
       console.log(logdt() + 'harvested some RTs'); 
     });
   } else {
-    console.log(logdt() + "DEBUGMODE: harvested some RTs");
+    console.log(logdt() + " [TEST] harvested some RTs");
   }
 }
 
@@ -212,33 +276,35 @@ function selectTweet(tweet_id, screen_name, tweet_text, callback) {
 
 // *** EVENTS ***
 
+function initEvents() {
 
-// post a random tweet
-setInterval(function() {
-  try {
-    postRandomTweet();
-  }
- catch (e) {
-    console.log(logdt() + e);
-  }
-},1000*60*25); // every 25 minutes
+  // post a random tweet
+  setInterval(function() {
+    try {
+      postRandomTweet();
+    }
+   catch (e) {
+      console.log(logdt() + e);
+    }
+  },1000 * 60 * random_tweet_timeout); // every 25 minutes
 
-// favorite retweets
-setInterval(function() {
-  try {
-    favRTs();
-  }
- catch (e) {
-    console.log(logdt() + e);
-  }
-},1000*60*60*1); // every hour
+  // favorite retweets
+  setInterval(function() {
+    try {
+      favRTs();
+    }
+   catch (e) {
+      console.log(logdt() + e);
+    }
+  },1000 * 60 * favorite_timeout); // every hour
 
-// tweet @ random public tweet containing the keyword
-setInterval(function() {
-  try {
-    processTweet();
-  } catch (e) {
-    console.log(logdt() + e);
-  }
-}, 1000*60*60*3); // every three hours
+  // tweet @ random public tweet containing the keyword
+  setInterval(function() {
+    try {
+      processTweet();
+    } catch (e) {
+      console.log(logdt() + e);
+    }
+  }, 1000 * 60 * random_tweet_timeout); // every three hours
 
+}

@@ -12,5 +12,8 @@
     ],
     "search_phrase": "keyword",
     "bot_screen_name": "screenname",
-    "test_mode": false
+    "test_mode": false,
+    "random_tweet_timeout": 25,
+    "favorite_timeout": 60,
+    "reply_tweet_timeout": 180
 }
