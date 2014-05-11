@@ -10,5 +10,6 @@
         "phrase2",
         "phrase3"
     ],
-    "search_phrase": "keyword"
+    "search_phrase": "keyword",
+    "bot_screen_name": "screenname"
 }

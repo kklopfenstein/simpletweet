@@ -29,6 +29,9 @@ var twit_data;
 // random phrases the bot will tweet
 var phrases;
 
+// bot screen name
+var bot_screen_name;
+
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) {
     console.log(logdt() + 'Error: ' + err);
@@ -39,6 +42,7 @@ fs.readFile(file, 'utf8', function (err, data) {
   twit_data = file_data.twit_data;
   phrases = file_data.phrases;
   search_phrase = file_data.search_phrase;
+  bot_screen_name = file_data.bot_screen_name;
  
   console.log(logdt() + " loading data ")
 
@@ -68,8 +72,6 @@ if(process.argv[2] == 'test') {
 }
 
 var tweet_data;
-
-var bot_screen_name = "screenname";
 
 var statement =   "";
 
