@@ -32,6 +32,9 @@ var phrases;
 // bot screen name
 var bot_screen_name;
 
+// Test mode - if true does not tweet
+var test_mode;
+
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) {
     console.log(logdt() + 'Error: ' + err);
@@ -43,6 +46,7 @@ fs.readFile(file, 'utf8', function (err, data) {
   phrases = file_data.phrases;
   search_phrase = file_data.search_phrase;
   bot_screen_name = file_data.bot_screen_name;
+  test_mode = file_data.test_mode;
  
   console.log(logdt() + " loading data ")
 
@@ -58,18 +62,6 @@ db.serialize(function() {
     console.log(logdt() + e);
   }
 });
-
-// Test mode - if true does not tweet
-var test_mode = false;
-
-// set test mode if argument is available
-
-if(process.argv[2] == 'test') {
-  test_mode = true;
-  console.log(logdt() + " test mode enabled");
-} else {
-  console.log(logdt() + " production mode enabled");
-}
 
 var tweet_data;
 

@@ -11,5 +11,6 @@
         "phrase3"
     ],
     "search_phrase": "keyword",
-    "bot_screen_name": "screenname"
+    "bot_screen_name": "screenname",
+    "test_mode": false
 }
