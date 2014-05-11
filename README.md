@@ -21,7 +21,7 @@ npm install moment
 Configuration
 =============
 
-Based on the example.json configuration, configure your Twitter API credentials and add the phrases, keyword, and twitter account screen name to the configuration file.
+Based on the twit_config.json configuration, configure your Twitter API credentials and add the phrases, keyword, and twitter account screen name to the configuration file.
 
 Run
 ===
