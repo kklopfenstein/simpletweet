@@ -9,9 +9,13 @@ Installation
 install the following npm modules
 
 npm install node-rest-client
+
 npm install twit
+
 npm install datejs
+
 npm install sqlite3
+
 npm install moment
 
 Configuration
