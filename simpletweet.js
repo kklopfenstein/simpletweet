@@ -39,6 +39,7 @@ fs.readFile(file, 'utf8', function (err, data) {
   var file_data = JSON.parse(data);
   twit_data = file_data.twit_data;
   phrases = file_data.phrases;
+  search_phrase = file_data.search_phrase;
  
   console.log(logdt() + " loading data ")
 
@@ -69,7 +70,7 @@ if(process.argv[2] == 'test') {
 
 var tweet_data;
 
-var bot_screen_name = "TarnationTim";
+var bot_screen_name = "screenname";
 
 var statement =   "";
 
@@ -131,7 +132,7 @@ function getTweetData() {
   var today = yyyy+'-'+mm+'-'+dd;
 
   try {
-    T.get('search/tweets', { q: 'tarnation since:' + today, count: 100}, function(err, data, response) {
+    T.get('search/tweets', { q: search_phrase + ' since:' + today, count: 100}, function(err, data, response) {
       tweet_data = data.statuses;
       console.log(logdt() + "Found " + data.statuses.length + " tweets for processing.");
     });
