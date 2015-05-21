@@ -1,4 +1,4 @@
-var restclient = require('node-restclient');
+var restclient = require('node-rest-client');
 var Twit = require('twit');
 var date = require('datejs');
 var sqlite3 = require('sqlite3').verbose();
